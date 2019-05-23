@@ -14,16 +14,20 @@ class Game:
 
     def new(self):
         self.all_sprites = pygame.sprite.Group()
-        self.player = Player()
+        self.player = Player('Rocket.png')
         self.all_sprites.add(self.player)
         self.platforms = pygame.sprite.Group()
         self.enemyRocket = pygame.sprite.Group()
-        print(self.platforms)
         for plat in PLATFORMS_LIST:
             p = Platforms(*plat)
             self.all_sprites.add(p)
             self.platforms.add(p)
+        for enemy in ENEMY_LIST:
+            e = enemyRocket(*enemy)
+            self.all_sprites.add(e)
+            self.enemyRocket.add(e)
         self.run()
+
 
     def run(self):
         self.playing = True
@@ -32,6 +36,9 @@ class Game:
             self.events()
             self.update()
             self.draw()
+            collision = pygame.sprite.spritecollide(self.player, self.platforms, False)
+            if collision:
+                print("Hell YEAH")
 
     def update(self):
         self.all_sprites.update()
@@ -42,6 +49,7 @@ class Game:
                 if self.playing:
                     self.playing = False
                 self.running = False
+
 
     def draw(self):
         self.screen.fill(DARK_BLUE)
