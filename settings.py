@@ -4,8 +4,10 @@ HEIGHT = 480
 TITLE = "PyScrable"
 FPS = 60
 
+
+
 #Colors
-DARK_BLUE = (0,206,209)
+DARK_BLUE = (0,28,73)
 BLACK = (255, 255, 255)
 RED = (0, 166, 203)
 GREEN = (0, 255, 0)
@@ -45,5 +47,3 @@ for row in platfrom:
 
 PLATFORMS_LIST = PLATFORMS_LIST_EMPTY
 ENEMY_LIST = ENEMY_LIST_EMPTY
-
-
