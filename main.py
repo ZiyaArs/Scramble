@@ -22,9 +22,10 @@ class Game:
 
     def new(self):
         self.all_sprites = pygame.sprite.Group()
-        self.pos_x = WIDTH/2
+        self.pos_x = WIDTH/4
         self.pos_y = HEIGHT/2
         self.player = Player('Rocket.png', self.pos_x, self.pos_y)
+        self.bullet = Bullet()
         self.all_sprites.add(self.player)
         self.platforms = pygame.sprite.Group()
         self.enemyRocket = pygame.sprite.Group()
@@ -36,8 +37,9 @@ class Game:
             self.e = enemyRocket(*enemy)
             self.all_sprites.add(self.e)
             self.enemyRocket.add(self.e)
+        if self.player_health <= 0:
+            self.player.kill()
         self.run()
-
     def run(self):
         self.playing = True
         while self.playing:
@@ -48,13 +50,11 @@ class Game:
 
     def update(self):
         self.all_sprites.update()
+
         collision = pygame.sprite.spritecollide(self.player, self.platforms, False)
         if collision:
             self.player_health -= 1
             self.new()
-        self.enemy.flyOnDetect(self.player, self.enemyRocket)
-
-
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -65,11 +65,42 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.playing = False
+                if event.key == pygame.K_SPACE:
+                    self.bullet.rect.center = self.player.rect.center
+                    self.all_sprites.add(self.bullet)
+            if self.player_health <= 0:
+                select = "Restart"
+                waiting = True
+                while waiting:
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_LEFT:
+                                select = "Restart"
+                            elif event.key == pygame.K_RIGHT:
+                                select = "Menu"
+                            if event.key == pygame.K_RETURN:
+                                if select == "Restart":
+                                    self.player_health = 3
+                                    self.new()
+                                if select == "Menu":
+                                    self.show_start_screen()
+                    if select == "Restart":
+                        text_Restart = self.textDarw("Restart", 50, 300, RED, 30)
+                    else:
+                        text_Restart = self.textDarw("Restart", 50, 300, DARK_RED, 30)
+                    if select == "Menu":
+                        text_Menu = self.textDarw("Menu", 200, 300, RED, 30)
+                    else:
+                        text_Menu = self.textDarw("Menu", 200, 300, DARK_RED, 30)
+                    pygame.display.flip()
+
 
     def draw(self):
         self.screen.fill(DARK_BLUE)
         self.all_sprites.draw(self.screen)
         self.textDarw(str(self.player_health), 20, 20, BLACK, 40)
+        if self.player_health <= 0:
+            self.textDarw("GameOver", WIDTH / 4, 150, BLACK, 50)
         
         pygame.display.flip()
 
@@ -81,9 +112,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        selected="Start"
+                        selected = "Start"
                     elif event.key == pygame.K_DOWN:
-                        selected="Quit"
+                        selected = "Quit"
                     if event.key == pygame.K_RETURN:
                         if selected == "Start":
                             self.new()
@@ -105,6 +136,7 @@ class Game:
 
     def show_go_screen(self):
         pass
+
 
 game = Game()
 game.show_start_screen()
