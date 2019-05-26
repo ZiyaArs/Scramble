@@ -35,13 +35,23 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.vx
         self.rect.y += self.vy
 
+
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, posx, posy):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((10,10))
+        self.image = pygame.Surface((10, 5))
         self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
+        self.rect.x = posx
+        self.rect.y = posy
         self.vx = 0
+
+    def update(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_z]:
+            self.vx += 5
+        self.rect.x += self.vx
 
 class Platforms(pygame.sprite.Sprite):
     def __init__(self, x, y, img):
@@ -66,9 +76,22 @@ class enemyRocket(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.fly = False
+
+    def flyOnDetect(self, mainObject, detectedObject):
+        collision = pygame.sprite.spritecollide(mainObject, detectedObject, False)
+
+        if collision:
+            self.fly = True
+        else:
+            self.fly = False
+
 
     def update(self):
         self.vx = 3
+        self.vy = 0
         self.rect.x -= self.vx
 
-
+        if self.fly == True:
+            self.vy = -3
+        self.rect.y += self.vy

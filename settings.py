@@ -9,7 +9,8 @@ FPS = 60
 #Colors
 DARK_BLUE = (0,28,73)
 BLACK = (255, 255, 255)
-RED = (0, 166, 203)
+RED = (216, 6, 52)
+DARK_RED = (89, 0, 20)
 GREEN = (0, 255, 0)
 YELLOW = (249, 215, 28)
 ALPHA = (0, 255, 0)
@@ -25,10 +26,13 @@ ENEMY_LIST_EMPTY = []
 platfrom = [
     "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
     "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    "B B R B R BB RBB  R  RBB  BBB    BBBBBBB B B BBBBBBBBBB  BBBBBBBBBBBBB",
-    "  B   B    B  B            B      B R B       B BBBBB      B BB  BB  B",
-    "                                                 RBB                  ",
+    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB                       BBBBBBBBBBBBBBBB",
+    "            BBBBBBBBBBBBBBBBBB                          BBBBBBBBBBBBBB",
+    "             RBBBBBB BBBBBBBB              B BBBBBBBBBB  BBBBBBBBBBBBB",
+    "              BBB R  R   BBB                  B BBBBB      B BB  BB  B",
+    "               B          B                      R                    ",
+    "                                                                      ",
+
 ]
 
 row_y = 0
